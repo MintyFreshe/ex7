@@ -33,13 +33,20 @@ class Employee:
 
     def __init(self, row):
 
-        first_name = ''
+        
+        tuple_return = parse_name(row)
+        
+        
+        first_name = tuple_return[0]
 
-        last_name = ''
+        last_name = tuple_return[1]
 
-        address = ''
+        address = parse_address(row)
 
-        email = ''
+        email = parse_email(row)
+
+
+
 
 
 def parse_name(text):
@@ -94,12 +101,15 @@ def main(path):
     employee_list = []
     
     
+    for text in lines:
 
-
+        Employeex = Employee(text) #<- employeex is a placeholder for the employee name or employee number
+                
+    
+       
     
     
-    
-    pass
+    return(employee_list)
 
 
 
