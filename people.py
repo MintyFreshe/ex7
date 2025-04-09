@@ -8,8 +8,7 @@ Date: 4_8_25
 Challenges Encountered: formatting the Regex, returning in desired format
 """
 
-import sys
-import argparse
+
 import re
 
 class Address:
@@ -47,8 +46,8 @@ def parse_name(text):
 
 
 def parse_address(text):
-    pattern = r"(\d+\s+[A-Za-z]+\s+(?:Street|St\.|Avenue|Ave\.|Boulevard|Blvd\.|Road|Rd\.))\s+([A-Z][a-z]+)\s+([A-Z]{2})"
-            #digits - streetname - streetmod.............................................. - state........ - city 
+    pattern = r'(\d+.*?)\b(\w+\s)([A-Z]{2})'
+        
     match = re.search(pattern, text)
     if match:
         street = match.group(1)
@@ -58,6 +57,8 @@ def parse_address(text):
         return None #if no match 
     
     address = Address(street, city, state)
+
+    #print(f"Address: {address}") #debugging line to see if the address is being parsed correctly
 
     return address
 
@@ -74,8 +75,8 @@ def parse_email(text):
 
 
 def main(path):
-    with open(path, 'r') as file: #use 'with' for better error handling if opening the file fails although here it wont... 
-        file_text = file.readlines() #readlines() reads it into a list so no need for splitlines()
+    with open(path, 'r') as file:  
+        file_text = file.readlines() 
     
     employee_list = []
     
