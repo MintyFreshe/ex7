@@ -10,6 +10,7 @@ Challenges Encountered: formatting the Regex, returning in desired format
 
 
 import re
+import pandas as pd
 
 class Address:
     def __init__(self, street, city, state):
@@ -83,7 +84,7 @@ def main(path):
     for line in file_text: 
         employee_list.append(Employee(line))
 
-        
+    
     return(employee_list)
 
 
@@ -91,3 +92,16 @@ def main(path):
 if __name__ == "__main__":
     result = main("people.txt")
     print(result)
+    # data = []
+    # for emp in result:
+    #     # Format the address as a single string if available.
+    #     address_str = f"{emp.address.street}, {emp.address.city}{emp.address.state}" if emp.address else None
+    #     data.append({
+    #         "First Name": emp.first_name,
+    #         "Last Name": emp.last_name,
+    #         "Address": address_str,
+    #         "Email": emp.email
+    #     })
+    
+    # df = pd.DataFrame(data)
+    # print(df)
