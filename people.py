@@ -18,7 +18,7 @@ class Address:
         self.state = state
         
     def __repr__(self):
-        return f"Address(street='{self.street}', city='{self.city}', state='{self.state}')\n"
+        return f"Address(street='{self.street}', city='{self.city}', state='{self.state}')"
 
 
 
@@ -32,7 +32,7 @@ class Employee:
 
     def __repr__(self): # to represent text nice(ish)ly. we could fix that with pandas though.
         return (f"Employee(first_name='{self.first_name}', last_name='{self.last_name}', " +
-                f"address={self.address}, email='{self.email}\n")
+                f"address={self.address}, email='{self.email}")
 
 
 def parse_name(text):
@@ -83,6 +83,7 @@ def main(path):
     for line in file_text: 
         employee_list.append(Employee(line))
 
+        
     return(employee_list)
 
 
