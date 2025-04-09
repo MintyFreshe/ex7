@@ -1,118 +1,91 @@
-"""A template for a python script deliverable for INST326.
+"""Regex practice script using the people.txt file for data to pull from
 
 Driver: Nathaniel Minty, Yaniv Ashwal
 Navigator: Nathaniel Minty, Yaniv Ashwal
 Assignment: ex 7
 Date: 4_8_25
 
-Challenges Encountered: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Challenges Encountered: formatting the Regex, returning in desired format
 """
 
 import sys
 import argparse
 import re
 
-
-
-
 class Address:
-
     def __init__(self, street, city, state):
-    
         self.street = street
-
         self.city = city
-
         self.state = state
-
-
+        
+    def __repr__(self):
+        return f"Address(street='{self.street}', city='{self.city}', state='{self.state}')\n"
 
 
 
 class Employee:
+    def __init__(self, row):
+        name = parse_name(row) #tuple of (firstname, lastname)
+        self.first_name = name[0] 
+        self.last_name = name[1]
+        self.address = parse_address(row) 
+        self.email = parse_email(row)
 
-    def __init(self, row):
-
-        
-        tuple_return = parse_name(row)
-        
-        
-        first_name = tuple_return[0]
-
-        last_name = tuple_return[1]
-
-        address = parse_address(row)
-
-        email = parse_email(row)
-
-
-
+    def __repr__(self): # to represent text nice(ish)ly. we could fix that with pandas though.
+        return (f"Employee(first_name='{self.first_name}', last_name='{self.last_name}', " +
+                f"address={self.address}, email='{self.email}\n")
 
 
 def parse_name(text):
-
-    
-    
-
-
-
-
-    return #tuple (first, last)
+    pattern = r"^([A-Z][a-z]+)\s([A-Z][a-z]+)"
+        #name starts with uppercase, continues lowercase.
+    match = re.search(pattern, text)
+    if match:
+        return match.group(1), match.group(2) #tupleify
+    return None #if no match
 
 
 
 def parse_address(text):
-
-    #regex street city state 
-
-
-
+    pattern = r"(\d+\s+[A-Za-z]+\s+(?:Street|St\.|Avenue|Ave\.|Boulevard|Blvd\.|Road|Rd\.))\s+([A-Z][a-z]+)\s+([A-Z]{2})"
+            #digits - streetname - streetmod.............................................. - state........ - city 
+    match = re.search(pattern, text)
+    if match:
+        street = match.group(1)
+        city = match.group(2)
+        state = match.group(3)
+    else: 
+        return None #if no match 
     
-    
-    addressobj = Address(street, city, state)
+    address = Address(street, city, state)
 
-    return addressobj
+    return address
 
 
 
 def parse_email(text):
-
-    #regex email
-
-
-
-    return #email
+    pattern = r"[\w._%+-]+@[a-zA-Z]+\.[a-zA-z]+"
+            #alphanumeric withsigns - @ - domainname -  'dot' - Top Level Domain
+    match = re.search(pattern, text)
+    if match: 
+        return match.group()
+    return None
 
 
 
 def main(path):
-    
-    #open read and separate lines
-    
-    openfile = open(path, 'r') 
-    
-    
-    file_as_string = openfile.readlines()
-
-    
-    lines = file_as_string.splitlines()
-    
+    with open(path, 'r') as file: #use 'with' for better error handling if opening the file fails although here it wont... 
+        file_text = file.readlines() #readlines() reads it into a list so no need for splitlines()
     
     employee_list = []
     
-    
-    for text in lines:
+    for line in file_text: 
+        employee_list.append(Employee(line))
 
-        Employeex = Employee(text) #<- employeex is a placeholder for the employee name or employee number
-                
-    
-       
-    
-    
     return(employee_list)
 
 
 
 if __name__ == "__main__":
-  
-    main(path) #????? 
+    result = main("people.txt")
+    print(result)
