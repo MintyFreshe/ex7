@@ -10,7 +10,7 @@ Challenges Encountered: formatting the Regex, returning in desired format
 
 
 import re
-#import pandas as pd
+# import pandas as pd
 
 class Address:
     def __init__(self, street, city, state):
@@ -19,7 +19,7 @@ class Address:
         self.state = state
         
     def __repr__(self):
-        return f"Address(street='{self.street}', city='{self.city}', state='{self.state}')"
+        return f"\'{self.street}, {self.city}, {self.state}\'"
 
 
 
@@ -32,8 +32,7 @@ class Employee:
         self.email = parse_email(row)
 
     def __repr__(self): # to represent text nice(ish)ly. we could fix that with pandas though.
-        return (f"Employee(first_name='{self.first_name}', last_name='{self.last_name}', " +
-                f"address={self.address}, email='{self.email}")
+        return (f"('{self.first_name}','{self.last_name}', {self.address}, '{self.email})")
 
 
 def parse_name(text):
@@ -51,9 +50,9 @@ def parse_address(text):
         
     match = re.search(pattern, text)
     if match:
-        street = match.group(1)
-        city = match.group(2)
-        state = match.group(3)
+        street = match.group(1).strip()
+        city = match.group(2).strip()
+        state = match.group(3).strip()
     else: 
         return None #if no match 
     
