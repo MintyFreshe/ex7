@@ -10,7 +10,7 @@ Challenges Encountered: formatting the Regex, returning in desired format
 
 
 import re
-import pandas as pd
+#import pandas as pd
 
 class Address:
     def __init__(self, street, city, state):
